@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+
+    
+
+    <form method="POST" action="/shop/tracker/">{% csrf_token %}
+        <fieldset id="disablingform">
+        <div class="form-row mt-5">
+            <h3>To view your order status Please enter your order id and Mobile assigned to that order</h3>
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">Order Id</label>
+                <input type="number" class="form-control" id="orderId" name="orderId">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">Mobile No.</label>
+                <input type="number" class="form-control" id="mobile" name="mobile">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Track Order</button>
+    </fieldset>
+    </form>
+
+
+    <h3 class="my-3">Order Status</h3>
+    <ul class="list-group" id="items">
+        {% for detail in orderupdate %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{detail.desc}}
+            <span class="badge badge-primary badge-pill">{{detail.timestamp}}</span>
+        </li>
+        {% endfor %}
+        
+    </ul>
+
+    <h3>{{message}}</h3>
+</div>
+{% endblock %}
+
+{% block js %}
+<!-- <script>
+$('#items').val(JSON.stringify(cart));
+if (localStorage.getItem('cart') == null){
+   var cart = {};
+}
+else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+}
+var sum = 0;
+if ($.isEmptyObject(cart)){
+    mystr = "Your cart is empty please add few items before checking out !!!";
+    document.getElementById('items').innerHTML = mystr;
+}
+else{
+    document.getElementById('disablingform').removeAttribute('disabled');
+}
+for (var item in cart){
+    let name = cart[item][1];
+    let qty = cart[item][0];
+    sum = sum + qty;
+    mystr = ` <li class="list-group-item d-flex justify-content-between align-items-center">
+        ${name}
+        <span class="badge badge-primary badge-pill">${qty}</span>
+    </li> `;
+
+    $('#items').append(mystr);
+}
+document.getElementById('cart').innerHTML = sum;
+
+{% if thank %}
+alert("Thank you for shopping with us, your order is placed and your order id is : {{id}} !! ")
+localStorage.clear();
+document.location = "/shop";
+{% endif %}
+
+</script> -->
+{% endblock %}
